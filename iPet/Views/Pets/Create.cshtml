@@ -1,0 +1,124 @@
+﻿@model iPet.Models.Pet
+
+@{
+    ViewBag.Title = "Anunciar Pet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PetImage, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                <label class="custom-file px-file">
+                    <input type="file" id="PetImageFile" name="PetImageFile" class="form-control custom-file-input" placeholder='Escolha um arquivo...' />
+                    <span class="custom-file-control form-control">Foto do Pet</span>
+                    <div class="px-file-buttons">
+                        <button type="button" class="btn px-file-clear">Limpar</button>
+                        <button type="button" class="btn btn-primary px-file-browse">Procurar</button>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Porte, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EnumDropDownListFor(model => model.Porte, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Porte, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Raca, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Raca, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Raca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Castrado, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Castrado)
+                    @Html.ValidationMessageFor(model => model.Castrado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cor, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EnumDropDownListFor(model => model.Cor, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.EnumDropDownListFor(model => model.Sexo, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vacinado, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Vacinado)
+                    @Html.ValidationMessageFor(model => model.Vacinado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.Description, 5, 85, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Anunciar" class="btn btn-success" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-offset-0 col-md-12">
+                <br />
+                <a href="@Url.Action("Index", "Pets")"><i class="fa fa-undo"> Voltar</i></a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    require(['jquery', 'px/plugins/px-file'], function ($) {
+        $('.custom-file').pxFile();
+    });
+</script>

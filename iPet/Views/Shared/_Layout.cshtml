@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" type="image/png" href="~/osso_icon.png" />
+    <!-- Open Sans font from Google CDN -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+    <title>iPet - @ViewBag.Title</title>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.js"></script>
+    @Styles.Render("~/PixelAdmin/css")
+    @Scripts.Render("~/PixelAdmin/js")
+
+
+    @{
+        var controllerName = string.Empty;
+        object controllerObj;
+        var actionName = string.Empty;
+        object actionObj;
+
+        if (ViewContext.RouteData.Values.TryGetValue("controller", out controllerObj))
+        {
+            controllerName = controllerObj.ToString();
+        }
+
+        if (ViewContext.RouteData.Values.TryGetValue("action", out actionObj))
+        {
+            actionName = actionObj.ToString();
+        }
+    }
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- holder.js -->
+    <script>
+        requirejs.config({
+            baseUrl: './../../js',
+            paths: { demo: './../../js/main/' }
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar px-navbar">
+        <!-- Header -->
+        <div class="navbar-header">
+            <a class="navbar-brand px-demo-brand" href="@Url.Action("Index", "Home")"><span class="px-demo-logo bg-primary"><span class="px-demo-logo-1"></span><span class="px-demo-logo-2"></span><span class="px-demo-logo-3"></span><span class="px-demo-logo-4"></span><span class="px-demo-logo-5"></span><span class="px-demo-logo-6"></span><span class="px-demo-logo-7"></span><span class="px-demo-logo-8"></span><span class="px-demo-logo-9"></span></span><img src="~/Content/img/iPetLogoWhite.png" style="margin-top: 10px; width: 80px;" /></a>
+        </div>
+
+        <!-- Navbar togglers -->
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#px-demo-navbar-collapse" aria-expanded="false"><i class="navbar-toggle-icon"></i></button>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="px-demo-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="@Url.Action("Index", "Home")">Dashboard</a>
+                <li><a href="@Url.Action("Create", "Pets")">Cadastrar Pet</a>
+                <li><a href="@Url.Action("Index", "Pets")">Ver Anuncios</a>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="@string.Format("../../img/Avatars/{0}", Session["Avatar"])" alt="" class="px-navbar-image">
+                        <span class="hidden-md">@Session["Name"]</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("TrocarSenha", "Conta")">Trocar senha</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("Sair", "Conta")"><i class="dropdown-icon fa fa-sign-out"></i>&nbsp;&nbsp;Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <script type="text/javascript">
+        require(['./jquery', './px/pixeladmin', './px/plugins/px-nav', './px/plugins/px-navbar', './px/plugins/px-footer', './px/extensions/perfect-scrollbar.jquery'], function ($) {
+            var controller  =  @Html.Raw(Json.Encode(controllerName));
+            var action = @Html.Raw(Json.Encode(actionName));
+
+            var crud = ["Create", "Edit", "Details", "Index"];
+
+            if (action != "") {
+                if ($.inArray(action, crud) != -1) {
+                    action = "";
+                }
+            }
+
+            if (controller == "Permissoes") {
+                controller = "Grupos";
+            }
+
+            // Activate current nav item
+            $('body > .px-nav')
+                .find('.px-nav-item > a[href="/' + controller + '/' + action+'"]')
+                .parent()
+                .addClass('active');
+
+            $('body > .px-nav').pxNav();
+            $('body > .px-footer').pxFooter();
+
+            // cleans modal data after closing
+            if (action != "Importar") {
+                $('body').on('hidden.bs.modal', '.modal', function () {
+                    $('.modal-body').empty();
+                });
+            }
+        });
+    </script>
+
+    <div class="px-content">
+        <div class="page-header">
+            <h1><span class="text-muted font-weight-light"><i class="page-header-icon @ViewBag.Icon"></i>@(controllerName != "Home" ? string.Format("{0} / ", controllerName) : null)</span>@ViewBag.Title @(controllerName == "Permissoes" ? string.Format("({0})", ViewBag.GrupoNome) : null)</h1>
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <footer class="px-footer px-footer-bottom p-t-0" style="background-color: #50b755;">
+        <span class="text-white">©@DateTime.Now.Year Todos os direitos reservados.</span>
+    </footer>
+</body>
+
+</html>

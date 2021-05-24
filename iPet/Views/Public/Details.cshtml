@@ -1,0 +1,194 @@
+﻿@model iPet.Models.Pet
+
+@{
+    ViewBag.Title = "Pet Detalhes";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>iPet - @Model.Nome</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="~/osso_icon.png" />
+    @Styles.Render("~/Public/css")
+    @Scripts.Render("~/Public/js")
+
+    <script>
+        requirejs.config({
+            baseUrl: './../../js',
+            paths: { demo: './../../js/main/' }
+        });
+    </script>
+</head>
+
+<body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top text-uppercase" style="background-color: #3c3e49" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="../../Public#page-top"><img src="~/Content/img/iPetLogoWhite.png" width="100" style="margin-top: -20px;" /></a>
+            <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto" style="margin-top:-40px;">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#find">Encontre</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Public/Favorites/">Favoritos</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#contact">FEEDBACK</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#about">Sobre</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Conta/Sair/">Sair</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-top: -10px; margin-left: 20px;">
+                    <li class="dropdown">
+                        <a class="text-success">
+                            <img src="@string.Format("../../img/Avatars/{0}", Session["Avatar"])" alt="" class="px-navbar-image">
+                            <span class="hidden-md">@Session["Name"]</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Grid Section -->
+    <section class="portfolio" id="find">
+        <!-- Portfolio Modal 1 -->
+        <div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
+            <div class="portfolio-modal-dialog bg-white">
+                <div class="container text-center">
+                    <div>
+                        @if (ViewBag.isFavorite)
+                        {
+                            <button style="float:right; margin-top: -40px; font-size: 50pt; cursor: pointer; color: yellow;" id="@Model.ID" class="btn-outline-light favorite-btn fa fa-star"></button>
+                        }
+                        else
+                        {
+                            <button style="float:right; margin-top: -40px; font-size: 50pt; cursor: pointer; color: gray;" id="@Model.ID" class="btn-outline-light favorite-btn fa fa-star"></button>
+                        }
+
+                        <img src="~/img/Pets/@Model.PetImage" class="rounded-circle shadow-lg" style="width: 500px;" />
+
+                        <div class="dl-horizontal" style="margin-top: 20px;">
+                            <p><b>@Html.DisplayNameFor(model => model.Nome)</b> : @Html.DisplayFor(model => model.Nome)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Porte)</b> : @Html.DisplayFor(model => model.Porte)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Raca)</b> : @Html.DisplayFor(model => model.Raca)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Castrado)</b> : @if (Model.Castrado){<text>Sim</text> }else{ <text>Não</text>}</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Preco)</b> : @Html.DisplayFor(model => model.Preco) R$</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Cor)</b> : @Html.DisplayFor(model => model.Cor)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Sexo)</b> : @Html.DisplayFor(model => model.Sexo)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Vacinado)</b> : @if (Model.Vacinado){<text>Sim</text> }else{<text>Não</text>}</p>
+                            <p><b>@Html.DisplayNameFor(model => model.Description)</b> : @Html.DisplayFor(model => model.Description)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">REDES SOCIAIS</h4>
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-google-plus"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-dribbble"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="copyright py-4 text-center text-white">
+        <div class="container">
+            <small>&copy; @DateTime.Now.Year Todos os direitos reservados</small>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!--------------------------------------------------------->
+    <!-------------------Initialize Bootstrap modals----------->
+
+    <script>
+        require(['px/extensions/modal']);
+    </script>
+
+    @RenderPage("~/Views/Modals/States/Success.cshtml")
+    @RenderPage("~/Views/Modals/States/Error.cshtml")
+
+    <script>
+        var user_id = @Html.Raw(Json.Encode(Session["UserID"]));
+
+        require(['jquery',], function ($) {
+            $('.favorite-btn').on('click', function (event) {
+                console.log('user: ' + user_id + ' pet: ' + event.target.id);
+
+                $.ajax({
+                    url: '/Pets/FavoritarDesfavoritar',
+                    type: 'POST',
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        userID: user_id,
+                        petID: event.target.id,
+                    }),
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (err) {
+                        alert('erro');
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

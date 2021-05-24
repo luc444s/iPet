@@ -1,0 +1,191 @@
+﻿@model IEnumerable<iPet.Models.Pet>
+
+@{
+    ViewBag.Title = "Favoritos";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>iPet - Favoritos</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="~/osso_icon.png" />
+    @Styles.Render("~/Public/css")
+    @Scripts.Render("~/Public/js")
+
+    <script>
+        requirejs.config({
+            baseUrl: './../../js',
+            paths: { demo: './../../js/main/' }
+        });
+    </script>
+</head>
+
+<body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top text-uppercase" style="background-color: #3c3e49" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="../../Public#page-top"><img src="~/Content/img/iPetLogoWhite.png" width="100" style="margin-top: -20px;" /></a>
+            <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto" style="margin-top:-40px;">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#find">Encontre</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Public/Favorites/">Favoritos</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#contact">FEEDBACK</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../Public#about">Sobre</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Conta/Sair/">Sair</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-top: -10px; margin-left: 20px;">
+                    <li class="dropdown">
+                        <a class="text-success">
+                            <img src="@string.Format("../../img/Avatars/{0}", Session["Avatar"])" alt="" class="px-navbar-image">
+                            <span class="hidden-md">@Session["Name"]</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Grid Section -->
+    <section class="portfolio" id="find">
+        <!-- Portfolio Modal 1 -->
+        <div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
+            <div class="portfolio-modal-dialog bg-white">
+                <div class="container text-center">
+                    <div>
+                        <h2 class="text-center text-uppercase text-secondary mb-0" style="float: left; margin-top: -15px;"><i class="fa fa-paw"></i> Pets</h2>
+                        <br />
+                        <br />
+                        @foreach (var item in Model)
+                        {
+                            <div class="page-forums-list-item box panel p-y-2 p-x-3">
+                                <div class="box-row">
+                                    <div class="page-forums-list-title box-cell col-md-7 col-lg-8 col-xl-9 p-r-4">
+                                        <img src="@string.Format("../../img/Pets/{0}", item.PetImage)" style="width: 100px;" />
+                                        <a href="/Public/Details/@item.ID" class="font-size-15 font-weight-bold">@item.Nome</a>
+                                        <div>
+                                            @item.Description
+                                        </div>
+                                    </div>
+
+                                    <!-- Spacer -->
+                                    <hr class="visible-xs visible-sm m-y-2">
+
+                                    <div class="box-cell col-md-5 col-lg-4 col-xl-3 valign-middle text-md-center">
+                                        <!-- Reset container's height by wrapping in a div -->
+                                        <div class="pull-md-right">
+                                            <div class="box-container width-md-auto valign-middle">
+                                                <div class="box-cell p-l-1 p-r-3">
+                                                    <div class="font-size-14"><strong>Match</strong></div>
+                                                    <div class="font-size-11 text-muted line-height-1">@item.MatchPercent%</div>
+                                                </div>
+                                                <div class="box-cell p-l-1 p-r-3">
+                                                    <div class="font-size-14"><strong>Sexo</strong></div>
+                                                    <div class="font-size-11 text-muted line-height-1">@item.Sexo</div>
+                                                </div>
+                                                <div class="box-cell p-l-1 p-r-3">
+                                                    <div class="font-size-14"><strong>Preço</strong></div>
+                                                    <div class="font-size-11 text-muted line-height-1">@item.Preco R$</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">REDES SOCIAIS</h4>
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-google-plus"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                                <i class="fa fa-fw fa-dribbble"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="copyright py-4 text-center text-white">
+        <div class="container">
+            <small>&copy; @DateTime.Now.Year Todos os direitos reservados</small>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!--------------------------------------------------------->
+    <!-------------------Initialize Bootstrap modals----------->
+
+    <script>
+        require(['px/extensions/modal']);
+    </script>
+
+    @RenderPage("~/Views/Modals/States/Success.cshtml")
+    @RenderPage("~/Views/Modals/States/Error.cshtml")
+
+    <script>
+        require(['jquery',], function ($) {
+
+        });
+    </script>
+</body>
+</html>

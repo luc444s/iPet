@@ -1,0 +1,50 @@
+﻿@media only screen and (max-width: 600px) {
+    .loader {
+        border: 16px solid white;
+        border-top: 16px solid #9276c6;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        margin-left: 27%;
+        margin-bottom: -10px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .loader {
+        border: 16px solid white;
+        border-top: 16px solid #9276c6;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        margin-left: 36%;
+        margin-bottom: -10px;
+    }
+} 
+
+.modal-dialog {
+    /* fixed position a zero-height full width container */
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    height: 0;
+    /* center all inline content */
+    text-align: center;
+}
+
+.carregando {
+    color: white;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

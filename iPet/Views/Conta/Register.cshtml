@@ -1,0 +1,131 @@
+﻿@model iPet.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" type="image/png" href="~/osso_icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    @Styles.Render("~/PixelAdmin/css")
+    @Styles.Render("~/Login/css")
+    @Scripts.Render("~/PixelAdmin/js")
+    <title>iPet - Cadastro</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- / Custom styling -->
+    <script>
+        requirejs.config({
+            baseUrl: './../js',
+            paths: { demo: './../js/main/' }
+        });
+    </script>
+</head>
+<body style="background-color: #1f1f1f;">
+    <div style="background-color: #1f1f1f; position:absolute;">
+        <div><img src="~/Content/img/iPetLogoGreen.png" width="300" /></div>
+        <a href="@Url.Action("Entrar","Conta")" style="font-weight: 700;" class="text-primary">Já é cadastrado?</a>
+    </div>
+
+    <div style="width: 400px; margin-left: auto; margin-right: auto;">
+        <div class="page-signup-container">
+            <br />
+            @using (Html.BeginForm("Register", "Conta", FormMethod.Post, new { @class = "panel p-a-4", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome Completo" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        <label class="custom-file px-file">
+                            <input type="file" id="AvatarFile" name="AvatarFile" class="form-control custom-file-input" placeholder='Escolha um arquivo...' />
+                            <span class="custom-file-control form-control">Avatar</span>
+                            <div class="px-file-buttons">
+                                <button type="button" class="btn px-file-clear">Limpar</button>
+                                <button type="button" class="btn btn-primary px-file-browse">Procurar</button>
+                            </div>
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", @placeholder = "Usuário" } })
+                        @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control", @placeholder = "Endereço" } })
+                        @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone", @id = "telefone-input" } })
+                        @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EnumDropDownListFor(model => model.TipoUsuario, htmlAttributes: new { @class = "form-control", @id = "enum-tpessoa" })
+                        @Html.ValidationMessageFor(model => model.TipoUsuario, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Cpf_Cnpj, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cpf/Cnpj", @id = "cpfcnpj" } })
+                        @Html.ValidationMessageFor(model => model.Cpf_Cnpj, "", new { @class = "text-danger" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-group-lg">
+                        @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Senha" } })
+                        <small class="text-muted">Minimum 6 characters</small>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">Cadastrar</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <footer class="panel-footer px-footer-bottom p-t-0" style="background-color: #1f1f1f;">
+        <span class="text-muted"><p style="color: white">©@DateTime.Now.Year iPet. Todos os direitos reservados.</p></span>
+    </footer>
+</body>
+</html>
+
+<script>
+    require(['jquery', 'px-libs/jquery.maskedinput'], function ($, moment, fileinput) {
+        $(document).ready(function () {
+            $('#cpfcnpj').mask('999.999.999-99');
+
+            $('#enum-tpessoa').on('change', function () {
+                if (this.value == 0) {
+                    $('#cpfcnpj').mask('999.999.999-99');
+                }
+                else {
+                    $('#cpfcnpj').mask('999.999.999/9999-99');
+                }
+            });
+        });
+
+        $('#telefone-input').mask('(99) 9999-9999?9');
+    });
+
+    require(['jquery', 'px/plugins/px-file'], function ($) {
+        $('.custom-file').pxFile();
+    });
+</script>
